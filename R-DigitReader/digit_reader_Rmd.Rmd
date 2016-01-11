@@ -4,8 +4,8 @@ author: "Bob Minnich"
 date: "January 7, 2016"
 output: html_document
 ---
-
-```{r}
+One thing that we wanted to see was what this would look like in a 3D Plot. Here we will use R because of it's rgl package, which allows for fast 3D plotting. But first we have to use Principal Component Analysis to reduce the number of Dimensions.
+```{r, message=F, warning=F}
 library(bpca)
 library(rgl)
 library(ggfortify)
@@ -33,8 +33,8 @@ plot.new()
 screeplot(pca, main = "PCA Plot of NIST data", type = "lines")
 ```
 
+We can see from the Screeplot that we might not be able to use 3 Principal components in order to reduce the number of dimensions but we will continue to see if we can understand anything visually from the plot.
 ```{r}
-
 dev.off()
 colorpal = c("#E41A1C", "#0066ff", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628","#ff37cb","#66ff33", "#00ffff")
 
@@ -48,14 +48,6 @@ for(i in 1:10){
 #Used {r testgl, webgl=TRUE, } for R Chunk
 #Plotting
 plot3d(pca$x[,1:3],col = labels_frame$color, size = 1)
-#Set initial View
-rgl.viewpoint(theta = -35, phi = 30, fov = 45, zoom = 1)
-#Add Legend (Only viewable in R)
-legend3d("topright", legend = paste('Num', c(0:9)), pch = 16, col = colorpal, cex=1, inset=c(0.15))
-
-#Legend 
-pie(rep(1,10),labels = c(0:9), col=colorpal, main = "Hand Written Digits - Legend")
-
 ```
 <table border="2" style="width:50%" align="center">
   <caption><font color="#000000">Legend : Scroll to Zoom, Click and drag to rotate</font></caption>
@@ -78,9 +70,5 @@ pie(rep(1,10),labels = c(0:9), col=colorpal, main = "Hand Written Digits - Legen
 ```{r testgl, webgl=TRUE, echo = FALSE, fig.align='center'}
 #Plotting
 plot3d(pca$x[,1:3],col = labels_frame$color, size = 1)
-#Set initial View
-rgl.viewpoint(theta = -35, phi = 30, fov = 45, zoom = 1)
-#Add Legend (Only viewable in R)
-legend3d("topright", legend = paste('Num', c(0:9)), pch = 16, col = colorpal, cex=1, inset=c(0.15))
-
 ```
+We end up with a very cool looking plot that allows us to turn and zoom on specific areas. One thing that is quite noticable is that the 1s are someone out on their own. This makes sense because out of all of the numbers the 1 is proably the most unquie of them.
